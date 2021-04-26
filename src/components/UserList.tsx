@@ -2,12 +2,13 @@ import React, {useEffect} from 'react';
 import {useTypedSelector} from "../store/hook/useTypedSelector";
 import {useDispatch} from "react-redux";
 import {fetchUsers} from "../store/action-creator/user";
+import {useActions} from "../store/hook/useActions";
 
 const UserList: React.FC = () => {
     const {users, error, loading} = useTypedSelector(state => state.user)
-    const dispatch = useDispatch()
+    const {fetchUsers} = useActions()
     useEffect(() => {
-        dispatch(fetchUsers())
+        fetchUsers()
     }, [])
 
     if (loading) {
@@ -19,7 +20,7 @@ const UserList: React.FC = () => {
     return (
         <div>
             {users.map(u =>
-                <div>{u.name}</div>)}
+                <div key={u.id}> {u.name}</div>)}
         </div>
     );
 };
